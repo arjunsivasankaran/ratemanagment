@@ -20,7 +20,12 @@ public class RateExceptionHandler {
     @ExceptionHandler(InvalidRateException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public final ResponseEntity<ErrorResponse> handleInternalServerError(InvalidRateException invalidRateException) {
-        return generateErrorResponse(invalidRateException, HttpStatus.INTERNAL_SERVER_ERROR);
+        return generateErrorResponse(invalidRateException, HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(InavlidCredentialException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public final ResponseEntity<ErrorResponse> handleInternalServerError(InavlidCredentialException invalidRateException) {
+        return generateErrorResponse(invalidRateException, HttpStatus.FORBIDDEN);
     }
 
     private ResponseEntity<ErrorResponse> generateErrorResponse(Exception ex, HttpStatus httpStatus) {

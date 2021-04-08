@@ -1,5 +1,6 @@
 package com.example.ratemanagment.controller;
 
+import com.example.ratemanagment.exception.InavlidCredentialException;
 import com.example.ratemanagment.model.TokenResponse;
 import com.example.ratemanagment.model.User;
 import com.example.ratemanagment.util.JWTUtil;
@@ -23,8 +24,10 @@ public class AuthentictionController {
     JWTUtil jwtutil;
 
     @PostMapping(value = "/authenticate", consumes = "application/json")
-    public TokenResponse login(@RequestBody User creds) {
-
+    public TokenResponse login(@RequestBody User creds) throws InavlidCredentialException {
+        if(!creds.getUser().equals("arjun") || !creds.getPassword().equals("password")){
+            throw new InavlidCredentialException("Bad Request");
+        }
         String token = jwtutil.getJWTToken(creds.getUser());
         TokenResponse tokenResponse = new TokenResponse();
         tokenResponse.setToken(token);
